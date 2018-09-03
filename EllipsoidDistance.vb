@@ -1,4 +1,5 @@
 ﻿Imports System.Math
+Imports MathExt
 
 Partial Public Class Ellipsoid
 
@@ -8,25 +9,9 @@ Partial Public Class Ellipsoid
     Dim tol2 As Double = Sqrt(tol0)
     Dim xthresh As Double = 1000 * tol2
     Dim GeodOrd As Integer = 6
-    'Dim nA1 As Integer = GeodOrd
-    'Dim nC1 As Integer = GeodOrd
-    'Dim nC1p As Integer = GeodOrd
-    'Dim nA2 As Integer = GeodOrd
-    'Dim nC2 As Integer = GeodOrd
-    'Dim nA3 As Integer = GeodOrd
-    'Dim nA3x As Integer = nA3
-    'Dim nC3 As Integer = GeodOrd
-    'Dim nC3x As Integer = CInt((nC3 * (nC3 - 1)) / 2)
-    'Dim nC4 As Integer = GeodOrd
-    'Dim nC4x As Integer = CInt((nC4 * (nC4 + 1)) / 2)
-    'Dim MaxIt As UInteger = 500
-    'Dim A3x(nA3x) As Double
-    'Dim C3x(nC3x) As Double
-    'Dim C4x(nC4x) As Double
-    'Dim a, f, f1, e2, ep2, n, b, c2, etol2 As Double
 
     Private Function SinCosNorm(ByRef SinX As Double, ByRef CosX As Double) As Boolean
-        Dim r As Double = jakStd20_MathExt.Hypot(SinX, CosX)
+        Dim r As Double = Hypot(SinX, CosX)
         SinX /= r
         CosX /= r
         Return True
@@ -118,7 +103,7 @@ Partial Public Class Ellipsoid
                     T3 = T3 + Sqrt(disc)
                 End If
                 'N.B. NthRoot always returns the real root.  NthRoot(-8) = -2.
-                Dim T As Double = jakStd20_MathExt.NthRoot(T3, 3)
+                Dim T As Double = NthRoot(T3, 3)
                 'T can be zero; but then r2 / T -> 0.
                 u += T + (If(Not (T = 0), r2 / T, 0))
             Else
@@ -163,7 +148,7 @@ Partial Public Class Ellipsoid
         Dim comg12 As Double = Cos(omg12)
         salp1 = cbet2 * somg12
         calp1 = If(comg12 >= 0, sbet12 + cbet2 * sbet1 * somg12 ^ 2 / (1 + comg12), sbet12a - cbet2 * sbet1 * somg12 ^ 2 / (1 - comg12))
-        Dim ssig12 As Double = jakStd20_MathExt.Hypot(salp1, calp1)
+        Dim ssig12 As Double = Hypot(salp1, calp1)
         Dim csig12 As Double = sbet1 * sbet2 + cbet1 * cbet2 * comg12
         If shortline And ssig12 < etol2 Then
             'Really short lines
@@ -265,7 +250,7 @@ Partial Public Class Ellipsoid
 
         ' sin(alp1) * cos(bet1) = sin(alp0)
         Dim salp0 As Double = salp1 * cbet1
-        Dim calp0 As Double = jakStd20_MathExt.Hypot(calp1, salp1 * sbet1)  ' calp0 > 0
+        Dim calp0 As Double = Hypot(calp1, salp1 * sbet1)  ' calp0 > 0
         Dim e2 As Double = Eccentricity ^ 2
         Dim ep2 As Double = SecondEccentricity ^ 2
 
@@ -628,7 +613,7 @@ Partial Public Class Ellipsoid
     '    Return a12
     'End Function
 
-    Public Function DistanceKarney(point1 As jakStd20_MathExt.Point3D, ByVal point2 As jakStd20_MathExt.Point3D, Optional ByRef alpha1 As Double = 0.0, Optional ByRef alpha2 As Double = 0.0) As Double
+    Public Function DistanceKarney(point1 As Point3D, ByVal point2 As Point3D, Optional ByRef alpha1 As Double = 0.0, Optional ByRef alpha2 As Double = 0.0) As Double
         Dim MaxIt As UInteger = 500
 
         'Lat1 As Double, ByVal Lon1 As Double, ByVal Lat2 As Double, ByVal Lon2 As Double,
@@ -648,8 +633,8 @@ Partial Public Class Ellipsoid
         '00617      * @return \e a12 arc length of between point 1 And point 2 (degrees).
 
         'Dim outmask As UInteger 'Output mask result
-        Dim Lat1 As Double = jakStd20_MathExt.RadDeg(point1.Y)
-        Dim Lat2 As Double = jakStd20_MathExt.RadDeg(point2.Y)
+        Dim Lat1 As Double = RadDeg(point1.Y)
+        Dim Lat2 As Double = RadDeg(point2.Y)
 
         Dim s12 As Double 'distance between point 1 And point 2 (meters)
         Dim azi1 As Double 'azimuth at point 1 (degrees)
@@ -670,7 +655,7 @@ Partial Public Class Ellipsoid
             c2 = SemiMayorAxis ^ 2 + SemiMinorAxis ^ 2
         Else
             If e2 > 0 Then
-                c2 = SemiMayorAxis ^ 2 + SemiMinorAxis ^ 2 * jakStd20_MathExt.ATanH(Sqrt(e2))
+                c2 = SemiMayorAxis ^ 2 + SemiMinorAxis ^ 2 * ATanH(Sqrt(e2))
             Else
                 c2 = SemiMayorAxis ^ 2 + SemiMinorAxis ^ 2 * Atan(Sqrt(-e2))
             End If
@@ -690,7 +675,7 @@ Partial Public Class Ellipsoid
 
         'Lon1 = JakMathLib.RadDeg(JakMathLib.AngleFit1Pi(JakMathLib.DegRad(Lon1)))
         'Lon12 = JakMathLib.RadDeg(JakMathLib.AngleFit1Pi(JakMathLib.AngleFit1Pi(JakMathLib.DegRad(Lon2)) - JakMathLib.DegRad(Lon1)))
-        Lon12 = jakStd20_MathExt.RadDeg(jakStd20_MathExt.AngleFit1Pi(point2.X - point1.X))
+        Lon12 = RadDeg(AngleFit1Pi(point2.X - point1.X))
 
         'Make the longitude difference positive
         If Lon12 < 0 Then
@@ -879,7 +864,7 @@ Partial Public Class Ellipsoid
         s12 = Abs(s12x)
         'From Lambda12: sin(alp1) * cos(bet1) = sin(alp0)
         Dim salp0 As Double = salp1 * cbet1
-        Dim calp0 As Double = jakStd20_MathExt.Hypot(calp1, salp1 * sbet1)
+        Dim calp0 As Double = Hypot(calp1, salp1 * sbet1)
         Dim alp12 As Double
         If calp0 <> 0 And salp0 <> 0 Then
             'From Lambda12: tan(bet) = tan(sig) * cos(alp)
@@ -948,8 +933,8 @@ Partial Public Class Ellipsoid
         azi2 = 0 - Atan2(-salp2, calp2) / (PI / 180)
 
         ' Returned values
-        alpha1 = jakStd20_MathExt.DegRad(azi1)
-        alpha2 = jakStd20_MathExt.DegRad(azi2)
+        alpha1 = DegRad(azi1)
+        alpha2 = DegRad(azi2)
         Return s12
     End Function
 

@@ -1,5 +1,5 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class PseudoPlateCarree
     Inherits Projections

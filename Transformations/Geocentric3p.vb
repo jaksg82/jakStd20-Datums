@@ -1,4 +1,4 @@
-﻿Imports jakStd20_MathExt
+﻿Imports MathExt
 
 Public Class Geocentric3p
     Inherits Transformations
@@ -166,11 +166,11 @@ Public Class Geocentric3p
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Delta X", idx, ParamType.Generic, True))
-        tmpList.Add(New ParamNameValue("Delta Y", idy, ParamType.Generic, True))
-        tmpList.Add(New ParamNameValue("Delta Z", idz, ParamType.Generic, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Delta X", idx, ParamType.Generic, True),
+            New ParamNameValue("Delta Y", idy, ParamType.Generic, True),
+            New ParamNameValue("Delta Z", idz, ParamType.Generic, True)
+        }
 
         Return tmpList
 

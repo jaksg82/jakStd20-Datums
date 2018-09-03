@@ -1,11 +1,11 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class ObliqueMercatorLaborde
     Inherits Projections
 
-    Dim iLatO, iAzim, iLonO, iEastO, iNorthO, iK0 As Double
-    Dim PM As Double = DegRad(2.337229167)
+    Private iLatO, iAzim, iLonO, iEastO, iNorthO, iK0 As Double
+    Private PM As Double = DegRad(2.337229167)
 
     Overrides ReadOnly Property Type As Method
         Get
@@ -199,14 +199,14 @@ Public Class ObliqueMercatorLaborde
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Latitude of projection center", LatitudeOfProjectionCenter, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Longitude of projection center", LongitudeOfProjectionCenter, ParamType.LatLong, False))
-        tmpList.Add(New ParamNameValue("Scale factor on initial line", ScaleFactorOnInitialLine, ParamType.ScaleFactor, False))
-        tmpList.Add(New ParamNameValue("Azimut of the initial line", AzimutOfInitialLine, ParamType.Angle, True))
-        tmpList.Add(New ParamNameValue("Easting at projection center", EastingAtProjectionCenter, ParamType.EastNorth, False))
-        tmpList.Add(New ParamNameValue("Northing at projection center", NorthingAtProjectionCenter, ParamType.EastNorth, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Latitude of projection center", LatitudeOfProjectionCenter, ParamType.LatLong, True),
+            New ParamNameValue("Longitude of projection center", LongitudeOfProjectionCenter, ParamType.LatLong, False),
+            New ParamNameValue("Scale factor on initial line", ScaleFactorOnInitialLine, ParamType.ScaleFactor, False),
+            New ParamNameValue("Azimut of the initial line", AzimutOfInitialLine, ParamType.Angle, True),
+            New ParamNameValue("Easting at projection center", EastingAtProjectionCenter, ParamType.EastNorth, False),
+            New ParamNameValue("Northing at projection center", NorthingAtProjectionCenter, ParamType.EastNorth, True)
+        }
 
         Return tmpList
 

@@ -1,10 +1,10 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class ObliqueMercatorHotineA
     Inherits Projections
 
-    Dim iLatO, iAzim, iAngle, iLonO, iEastO, iNorthO, iK0 As Double
+    Private iLatO, iAzim, iAngle, iLonO, iEastO, iNorthO, iK0 As Double
 
     Overrides ReadOnly Property Type As Method
         Get
@@ -189,15 +189,15 @@ Public Class ObliqueMercatorHotineA
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Latitude of projection center", LatitudeOfProjectionCenter, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Longitude of projection center", LongitudeOfProjectionCenter, ParamType.LatLong, False))
-        tmpList.Add(New ParamNameValue("Scale factor on initial line", ScaleFactorOnInitialLine, ParamType.ScaleFactor, False))
-        tmpList.Add(New ParamNameValue("Azimut of the initial line", AzimutOfInitialLine, ParamType.Angle, True))
-        tmpList.Add(New ParamNameValue("Angle from rectified to skewed grid", AngleFromRectifiedToSkewedGrid, ParamType.Angle, True))
-        tmpList.Add(New ParamNameValue("False Easting", FalseEasting, ParamType.EastNorth, False))
-        tmpList.Add(New ParamNameValue("False Northing", FalseNorthing, ParamType.EastNorth, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Latitude of projection center", LatitudeOfProjectionCenter, ParamType.LatLong, True),
+            New ParamNameValue("Longitude of projection center", LongitudeOfProjectionCenter, ParamType.LatLong, False),
+            New ParamNameValue("Scale factor on initial line", ScaleFactorOnInitialLine, ParamType.ScaleFactor, False),
+            New ParamNameValue("Azimut of the initial line", AzimutOfInitialLine, ParamType.Angle, True),
+            New ParamNameValue("Angle from rectified to skewed grid", AngleFromRectifiedToSkewedGrid, ParamType.Angle, True),
+            New ParamNameValue("False Easting", FalseEasting, ParamType.EastNorth, False),
+            New ParamNameValue("False Northing", FalseNorthing, ParamType.EastNorth, True)
+        }
 
         Return tmpList
 

@@ -1,4 +1,6 @@
-﻿Public MustInherit Class Projections
+﻿Imports MathExt
+
+Public MustInherit Class Projections
     Dim iFname, iSname As String
     Dim iEll As Ellipsoid
 
@@ -344,14 +346,14 @@
     ''' </summary>
     ''' <param name="point">Projected point coordinates to be converted.</param>
     ''' <returns>Point coordinates on the ellipsoid.</returns>
-    Public MustOverride Function ToGeographic(point As jakStd20_MathExt.Point3D) As jakStd20_MathExt.Point3D
+    Public MustOverride Function ToGeographic(point As Point3D) As Point3D
 
     ''' <summary>
     ''' Convert Lat/Long coordinates to projected East/North coordinates.
     ''' </summary>
     ''' <param name="point">Geographic point coordinates to convert.</param>
     ''' <returns>Projected point coordinates.</returns>
-    Public MustOverride Function FromGeographic(point As jakStd20_MathExt.Point3D) As jakStd20_MathExt.Point3D
+    Public MustOverride Function FromGeographic(point As Point3D) As Point3D
 
     ''' <summary>
     ''' Projection method used.

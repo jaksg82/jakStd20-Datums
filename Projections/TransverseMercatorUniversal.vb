@@ -1,12 +1,12 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class TransverseMercatorUniversal
     Inherits Projections
 
-    Dim iLatO, iK0, iLonO, iEastO, iNorthO As Double
-    Dim iZone As Byte
-    Dim iHemi As Boolean
+    Private iLatO, iK0, iLonO, iEastO, iNorthO As Double
+    Private iZone As Byte
+    Private iHemi As Boolean
 
     Overrides ReadOnly Property Type As Method
         Get
@@ -230,10 +230,10 @@ Public Class TransverseMercatorUniversal
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Fuse Number", Fuse, ParamType.UtmFuse, False))
-        tmpList.Add(New ParamNameValue("Is North Hemisphere", If(IsNorthHemisphere, 90.0, -90.0), ParamType.TrueFalse, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Fuse Number", Fuse, ParamType.UtmFuse, False),
+            New ParamNameValue("Is North Hemisphere", If(IsNorthHemisphere, 90.0, -90.0), ParamType.TrueFalse, True)
+        }
 
         Return tmpList
 

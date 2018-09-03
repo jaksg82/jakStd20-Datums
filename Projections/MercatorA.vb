@@ -1,10 +1,10 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class MercatorA
     Inherits Projections
 
-    Dim iLatO, iLonO, iK0, iEastO, iNorthO As Double
+    Private iLatO, iLonO, iK0, iEastO, iNorthO As Double
 
     Overrides ReadOnly Property Type As Method
         Get
@@ -120,12 +120,12 @@ Public Class MercatorA
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Longitude of False Origin", LongitudeOfOrigin, ParamType.LatLong, False))
-        tmpList.Add(New ParamNameValue("Scale factor at Origin", OriginScale, ParamType.ScaleFactor, True))
-        tmpList.Add(New ParamNameValue("False Easting at Origin", FalseEasting, ParamType.EastNorth, False))
-        tmpList.Add(New ParamNameValue("False Northing at Origin", FalseNorthing, ParamType.EastNorth, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Longitude of False Origin", LongitudeOfOrigin, ParamType.LatLong, False),
+            New ParamNameValue("Scale factor at Origin", OriginScale, ParamType.ScaleFactor, True),
+            New ParamNameValue("False Easting at Origin", FalseEasting, ParamType.EastNorth, False),
+            New ParamNameValue("False Northing at Origin", FalseNorthing, ParamType.EastNorth, True)
+        }
 
         Return tmpList
 

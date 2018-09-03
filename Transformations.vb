@@ -1,4 +1,6 @@
-﻿Public MustInherit Class Transformations
+﻿Imports MathExt
+
+Public MustInherit Class Transformations
     Private iFname, iSname As String
     Private iSrcEll, iTgtEll As Ellipsoid
 
@@ -80,13 +82,13 @@
     End Enum
 
     Public Function GetAllMethodNames() As List(Of String)
-        Dim tmpList As New List(Of String)
-
-        tmpList.Add("No transformation")
-        tmpList.Add("3-parameter geocentric translation")
-        tmpList.Add("Helmert 7-parameter transformation")
-        tmpList.Add("Molodensky-Badekas 10-parameter transformation")
-        tmpList.Add("Abridged Molodensky transformation")
+        Dim tmpList As New List(Of String) From {
+            "No transformation",
+            "3-parameter geocentric translation",
+            "Helmert 7-parameter transformation",
+            "Molodensky-Badekas 10-parameter transformation",
+            "Abridged Molodensky transformation"
+        }
 
         Return tmpList
 
@@ -256,8 +258,8 @@
 
     Public MustOverride Function GetParams() As List(Of ParamNameValue)
 
-    Public MustOverride Function ToWGS84(point As jakStd20_MathExt.Point3D) As jakStd20_MathExt.Point3D
+    Public MustOverride Function ToWGS84(point As Point3D) As Point3D
 
-    Public MustOverride Function FromWGS84(point As jakStd20_MathExt.Point3D) As jakStd20_MathExt.Point3D
+    Public MustOverride Function FromWGS84(point As Point3D) As Point3D
 
 End Class

@@ -1,10 +1,10 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class LambertConic2SP
     Inherits Projections
 
-    Dim iLatO, iLat1, iLat2, iLonO, iEastO, iNorthO As Double
+    Private iLatO, iLat1, iLat2, iLonO, iEastO, iNorthO As Double
 
     Overrides ReadOnly Property Type As Method
         Get
@@ -161,14 +161,14 @@ Public Class LambertConic2SP
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Latitude of False Origin", LatitudeOfFalseOrigin, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Longitude of False Origin", LongitudeOfFalseOrigin, ParamType.LatLong, False))
-        tmpList.Add(New ParamNameValue("Latitude of first parallel", LatitudeOfFirstParallel, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Latitude of second parallel", LatitudeOfSecondParallel, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Easting at false Origin", EastingAtFalseOrigin, ParamType.EastNorth, False))
-        tmpList.Add(New ParamNameValue("Northing at false Origin", NorthingAtFalseOrigin, ParamType.EastNorth, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Latitude of False Origin", LatitudeOfFalseOrigin, ParamType.LatLong, True),
+            New ParamNameValue("Longitude of False Origin", LongitudeOfFalseOrigin, ParamType.LatLong, False),
+            New ParamNameValue("Latitude of first parallel", LatitudeOfFirstParallel, ParamType.LatLong, True),
+            New ParamNameValue("Latitude of second parallel", LatitudeOfSecondParallel, ParamType.LatLong, True),
+            New ParamNameValue("Easting at false Origin", EastingAtFalseOrigin, ParamType.EastNorth, False),
+            New ParamNameValue("Northing at false Origin", NorthingAtFalseOrigin, ParamType.EastNorth, True)
+        }
 
         Return tmpList
 

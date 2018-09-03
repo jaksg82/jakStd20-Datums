@@ -1,22 +1,22 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class KrovakModified
     Inherits Projections
 
-    Dim iLatO, iK0, iLonO, iEastO, iNorthO, iAzim, iLat1 As Double
-    Dim Xo As Double = 1089000.0
-    Dim Yo As Double = 654000.0
-    Dim C1 As Double = 0.02946529277
-    Dim C2 As Double = 0.02515965696
-    Dim C3 As Double = 0.0000001193845912
-    Dim C4 As Double = -0.0000004668270147
-    Dim C5 As Double = 0.000000000009233980362
-    Dim C6 As Double = 0.000000000001523735715
-    Dim C7 As Double = 1.696780024E-18
-    Dim C8 As Double = 4.408314235E-18
-    Dim C9 As Double = -8.331083518E-24
-    Dim C10 As Double = -3.689471323E-24
+    Private iLatO, iK0, iLonO, iEastO, iNorthO, iAzim, iLat1 As Double
+    Private Xo As Double = 1089000.0
+    Private Yo As Double = 654000.0
+    Private C1 As Double = 0.02946529277
+    Private C2 As Double = 0.02515965696
+    Private C3 As Double = 0.0000001193845912
+    Private C4 As Double = -0.0000004668270147
+    Private C5 As Double = 0.000000000009233980362
+    Private C6 As Double = 0.000000000001523735715
+    Private C7 As Double = 1.696780024E-18
+    Private C8 As Double = 4.408314235E-18
+    Private C9 As Double = -8.331083518E-24
+    Private C10 As Double = -3.689471323E-24
 
     Public Overrides ReadOnly Property Type As Method
         Get
@@ -115,10 +115,11 @@ Public Class KrovakModified
         dY = dY + C7 * Yr * (3 * Xr ^ 2 - Yr) - 4 * C10 * Xr * Yr * (Xr ^ 2 - Yr ^ 2) + C9 * (Xr ^ 4 + Yr ^ 4 - 6 * Xr ^ 2 * Yr ^ 2)
 
         'Return the results
-        Dim TmpResult As New Point3D
-        TmpResult.X = Xp - dX + iNorthO  'Southing
-        TmpResult.Y = Yp - dY + iEastO 'Westing
-        TmpResult.Z = point.Z
+        Dim TmpResult As New Point3D With {
+            .X = Xp - dX + iNorthO,  'Southing
+            .Y = Yp - dY + iEastO, 'Westing
+            .Z = point.Z
+        }
         Return TmpResult
 
     End Function
@@ -160,10 +161,11 @@ Public Class KrovakModified
             tempLat = 2 * (Math.Atan(tOr ^ (-1 / B) * Math.Tan(U / 2 + Math.PI / 4) ^ (1 / B) * ((1 + ecc * Math.Sin(tempLat)) / (1 - ecc * Math.Sin(tempLat))) ^ (ecc / 2)) - Math.PI / 4)
         Next
         'Return the results
-        Dim TmpResult As New Point3D
-        TmpResult.X = iLonO - V / B
-        TmpResult.Y = tempLat
-        TmpResult.Z = point.Z
+        Dim TmpResult As New Point3D With {
+            .X = iLonO - V / B,
+            .Y = tempLat,
+            .Z = point.Z
+        }
         Return TmpResult
 
     End Function
@@ -187,15 +189,15 @@ Public Class KrovakModified
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Latitude of projection center", LatitudeOfProjectionCenter, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Longitude of Origin", LongitudeOfOrigin, ParamType.LatLong, False))
-        tmpList.Add(New ParamNameValue("Azimut of initial line", AzimutOfInitialLine, ParamType.Angle, False))
-        tmpList.Add(New ParamNameValue("Latitude of pseudo standard parallel", LatitudeOfPseudoStandardParallel, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Scale factor on pseudo standard parallel", ScaleFactorOnPseudoStandardParallel, ParamType.ScaleFactor, False))
-        tmpList.Add(New ParamNameValue("False Easting at Origin", FalseEasting, ParamType.EastNorth, False))
-        tmpList.Add(New ParamNameValue("False Northing at Origin", FalseNorthing, ParamType.EastNorth, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Latitude of projection center", LatitudeOfProjectionCenter, ParamType.LatLong, True),
+            New ParamNameValue("Longitude of Origin", LongitudeOfOrigin, ParamType.LatLong, False),
+            New ParamNameValue("Azimut of initial line", AzimutOfInitialLine, ParamType.Angle, False),
+            New ParamNameValue("Latitude of pseudo standard parallel", LatitudeOfPseudoStandardParallel, ParamType.LatLong, True),
+            New ParamNameValue("Scale factor on pseudo standard parallel", ScaleFactorOnPseudoStandardParallel, ParamType.ScaleFactor, False),
+            New ParamNameValue("False Easting at Origin", FalseEasting, ParamType.EastNorth, False),
+            New ParamNameValue("False Northing at Origin", FalseNorthing, ParamType.EastNorth, True)
+        }
 
         Return tmpList
 

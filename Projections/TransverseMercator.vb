@@ -1,10 +1,10 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class TransverseMercator
     Inherits Projections
 
-    Dim iLatO, iK0, iLonO, iEastO, iNorthO As Double
+    Private iLatO, iK0, iLonO, iEastO, iNorthO As Double
 
     Overrides ReadOnly Property Type As Method
         Get
@@ -208,13 +208,13 @@ Public Class TransverseMercator
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Latitude of Natural Origin", LatitudeOfNaturalOrigin, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Longitude of Natural Origin", LongitudeOfNaturalOrigin, ParamType.LatLong, False))
-        tmpList.Add(New ParamNameValue("Scale factor at Natural Origin", ScaleFactorAtNaturalOrigin, ParamType.ScaleFactor, False))
-        tmpList.Add(New ParamNameValue("False Easting at Natural Origin", FalseEasting, ParamType.EastNorth, False))
-        tmpList.Add(New ParamNameValue("False Northing at Natural Origin", FalseNorthing, ParamType.EastNorth, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Latitude of Natural Origin", LatitudeOfNaturalOrigin, ParamType.LatLong, True),
+            New ParamNameValue("Longitude of Natural Origin", LongitudeOfNaturalOrigin, ParamType.LatLong, False),
+            New ParamNameValue("Scale factor at Natural Origin", ScaleFactorAtNaturalOrigin, ParamType.ScaleFactor, False),
+            New ParamNameValue("False Easting at Natural Origin", FalseEasting, ParamType.EastNorth, False),
+            New ParamNameValue("False Northing at Natural Origin", FalseNorthing, ParamType.EastNorth, True)
+        }
 
         Return tmpList
 

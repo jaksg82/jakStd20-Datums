@@ -1,10 +1,10 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class KrovakNorth
     Inherits Projections
 
-    Dim iLatO, iK0, iLonO, iEastO, iNorthO, iAzim, iLat1 As Double
+    Private iLatO, iK0, iLonO, iEastO, iNorthO, iAzim, iLat1 As Double
 
     Public Overrides ReadOnly Property Type As Method
         Get
@@ -94,10 +94,11 @@ Public Class KrovakNorth
         Xp = r * Math.Cos(Theta)
         Yp = r * Math.Sin(Theta)
         'Return the results
-        Dim TmpResult As New Point3D
-        TmpResult.Y = -(Xp + iNorthO) 'Southing to Nothing
-        TmpResult.X = -(Yp + iEastO) 'Westing to Easting
-        TmpResult.Z = point.Z
+        Dim TmpResult As New Point3D With {
+            .Y = -(Xp + iNorthO), 'Southing to Nothing
+            .X = -(Yp + iEastO), 'Westing to Easting
+            .Z = point.Z
+        }
         Return TmpResult
 
     End Function
@@ -130,10 +131,11 @@ Public Class KrovakNorth
             tempLat = 2 * (Math.Atan(tOr ^ (-1 / B) * Math.Tan(U / 2 + Math.PI / 4) ^ (1 / B) * ((1 + ecc * Math.Sin(tempLat)) / (1 - ecc * Math.Sin(tempLat))) ^ (ecc / 2)) - Math.PI / 4)
         Next
         'Return the results
-        Dim TmpResult As New Point3D
-        TmpResult.X = iLonO - V / B
-        TmpResult.Y = tempLat
-        TmpResult.Z = point.Z
+        Dim TmpResult As New Point3D With {
+            .X = iLonO - V / B,
+            .Y = tempLat,
+            .Z = point.Z
+        }
         Return TmpResult
 
     End Function
@@ -157,15 +159,15 @@ Public Class KrovakNorth
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Latitude of projection center", LatitudeOfProjectionCenter, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Longitude of Origin", LongitudeOfOrigin, ParamType.LatLong, False))
-        tmpList.Add(New ParamNameValue("Azimut of initial line", AzimutOfInitialLine, ParamType.Angle, False))
-        tmpList.Add(New ParamNameValue("Latitude of pseudo standard parallel", LatitudeOfPseudoStandardParallel, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Scale factor on pseudo standard parallel", ScaleFactorOnPseudoStandardParallel, ParamType.ScaleFactor, False))
-        tmpList.Add(New ParamNameValue("False Easting at Origin", FalseEasting, ParamType.EastNorth, False))
-        tmpList.Add(New ParamNameValue("False Northing at Origin", FalseNorthing, ParamType.EastNorth, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Latitude of projection center", LatitudeOfProjectionCenter, ParamType.LatLong, True),
+            New ParamNameValue("Longitude of Origin", LongitudeOfOrigin, ParamType.LatLong, False),
+            New ParamNameValue("Azimut of initial line", AzimutOfInitialLine, ParamType.Angle, False),
+            New ParamNameValue("Latitude of pseudo standard parallel", LatitudeOfPseudoStandardParallel, ParamType.LatLong, True),
+            New ParamNameValue("Scale factor on pseudo standard parallel", ScaleFactorOnPseudoStandardParallel, ParamType.ScaleFactor, False),
+            New ParamNameValue("False Easting at Origin", FalseEasting, ParamType.EastNorth, False),
+            New ParamNameValue("False Northing at Origin", FalseNorthing, ParamType.EastNorth, True)
+        }
 
         Return tmpList
 

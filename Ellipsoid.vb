@@ -1,4 +1,5 @@
 ﻿Imports System.Math
+Imports MathExt
 
 Public Class Ellipsoid
     Private iSphere As Boolean
@@ -32,7 +33,7 @@ Public Class Ellipsoid
             Return iAxis
         End Get
         Set(value As Double)
-            If jakStd20_MathExt.IsFinite(value) Then iAxis = value
+            If IsFinite(value) Then iAxis = value
         End Set
     End Property
 
@@ -41,7 +42,7 @@ Public Class Ellipsoid
             Return iInvFlat
         End Get
         Set(value As Double)
-            If jakStd20_MathExt.IsFinite(value) Then iInvFlat = value
+            If IsFinite(value) Then iInvFlat = value
         End Set
     End Property
 
@@ -106,13 +107,13 @@ Public Class Ellipsoid
             End If
 
         End If
-        If jakStd20_MathExt.IsFinite(semiMayorAxis) Then
+        If IsFinite(semiMayorAxis) Then
             iAxis = semiMayorAxis
         Else
             iAxis = 6378137
         End If
 
-        If jakStd20_MathExt.IsFinite(inverseFlattening) Then
+        If IsFinite(inverseFlattening) Then
             If inverseFlattening = 0.0 Then
                 Me.InverseFlattening = inverseFlattening
                 IsSphere = True
@@ -141,7 +142,7 @@ Public Class Ellipsoid
         Me.ShortName = tmpell.ShortName
         iAxis = tmpell.SemiMayorAxis
         iInvFlat = tmpell.InverseFlattening
-        If jakStd20_MathExt.IsFinite(tmpell.InverseFlattening) Then
+        If IsFinite(tmpell.InverseFlattening) Then
             If tmpell.InverseFlattening = 0.0 Then
                 IsSphere = True
             Else
@@ -201,7 +202,7 @@ Public Class Ellipsoid
         Return Rc
     End Function
 
-    Public Function Distance(point1 As jakStd20_MathExt.Point3D, ByVal point2 As jakStd20_MathExt.Point3D, Optional ByRef alpha1 As Double = 0.0, Optional ByRef alpha2 As Double = 0.0) As Double
+    Public Function Distance(point1 As Point3D, ByVal point2 As Point3D, Optional ByRef alpha1 As Double = 0.0, Optional ByRef alpha2 As Double = 0.0) As Double
         Dim smax, smix, flatt, lat1, lat2, U1, U2, deltaLon, lon1, lon2, dist, sinSigma, cosSigma, Sigma, lambda As Double
         Dim sinAlpha, cos2Alpha, cos2sigma, Cc, lambdaPrev, Usquare, Aa, Bb, k1, DeltaSigma As Double
         Dim maxIter As Integer = 100000
@@ -225,10 +226,10 @@ Public Class Ellipsoid
                 'Geodesic runs along equator
                 dist = smax * lambda
                 If lon1 > lon2 Then
-                    alpha1 = jakStd20_MathExt.DegRad(270)
+                    alpha1 = DegRad(270)
                     alpha2 = alpha1
                 Else
-                    alpha1 = jakStd20_MathExt.DegRad(90)
+                    alpha1 = DegRad(90)
                     alpha2 = alpha1
                 End If
             Else

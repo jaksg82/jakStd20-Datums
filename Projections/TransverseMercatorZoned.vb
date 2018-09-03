@@ -1,10 +1,10 @@
-﻿Imports jakStd20_MathExt
-Imports jakStd20_StringFormat
+﻿Imports MathExt
+Imports StringFormat
 
 Public Class TransverseMercatorZoned
     Inherits Projections
 
-    Dim iLatO, iK0, iLonI, iZoneW, iEastO, iNorthO As Double
+    Private iLatO, iK0, iLonI, iZoneW, iEastO, iNorthO As Double
 
     Overrides ReadOnly Property Type As Method
         Get
@@ -223,22 +223,23 @@ Public Class TransverseMercatorZoned
     End Function
 
     Public Overrides Function GetParams() As List(Of ParamNameValue)
-        Dim tmpList As New List(Of ParamNameValue)
-
-        tmpList.Add(New ParamNameValue("Initial longitude", InitialLongitude, ParamType.LatLong, False))
-        tmpList.Add(New ParamNameValue("Zone width", ZoneWidth, ParamType.Angle, False))
-        tmpList.Add(New ParamNameValue("Latitude of Natural Origin", LatitudeOfNaturalOrigin, ParamType.LatLong, True))
-        tmpList.Add(New ParamNameValue("Scale factor at Natural Origin", ScaleFactorAtNaturalOrigin, ParamType.ScaleFactor, False))
-        tmpList.Add(New ParamNameValue("False Easting at Natural Origin", FalseEasting, ParamType.EastNorth, False))
-        tmpList.Add(New ParamNameValue("False Northing at Natural Origin", FalseNorthing, ParamType.EastNorth, True))
+        Dim tmpList As New List(Of ParamNameValue) From {
+            New ParamNameValue("Initial longitude", InitialLongitude, ParamType.LatLong, False),
+            New ParamNameValue("Zone width", ZoneWidth, ParamType.Angle, False),
+            New ParamNameValue("Latitude of Natural Origin", LatitudeOfNaturalOrigin, ParamType.LatLong, True),
+            New ParamNameValue("Scale factor at Natural Origin", ScaleFactorAtNaturalOrigin, ParamType.ScaleFactor, False),
+            New ParamNameValue("False Easting at Natural Origin", FalseEasting, ParamType.EastNorth, False),
+            New ParamNameValue("False Northing at Natural Origin", FalseNorthing, ParamType.EastNorth, True)
+        }
 
         Return tmpList
 
     End Function
 
     Public Overrides Function ToP190Header() As List(Of String)
-        Dim ret As New List(Of String)
-        ret.Add("H2600 Projection Not Supported".PadRight(80))
+        Dim ret As New List(Of String) From {
+            "H2600 Projection Not Supported".PadRight(80)
+        }
         Return ret
     End Function
 

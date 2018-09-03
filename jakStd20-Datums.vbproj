@@ -1,13 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>jakStd20_Datums</RootNamespace>
+    <RootNamespace>Datums</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Copyright>Copyright © Simone Giacomoni 2018</Copyright>
     <Description>Handles the coordinates, datums and conversions</Description>
     <OptionStrict>On</OptionStrict>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>0.2.0</Version>
+    <PackageId>jaksg82.Std20.Datums</PackageId>
+    <Authors>jaksg82</Authors>
+    <Product>Standard2.0 library Datums</Product>
+    <PackageLicenseUrl>https://github.com/jaksg82/jakStd20-Datums/blob/master/README.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/jaksg82/jakStd20-Datums</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -23,8 +28,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\jakStd20-MathExt\jakStd20-MathExt.vbproj" />
-    <ProjectReference Include="..\jakStd20-StringFormat\jakStd20-StringFormat.vbproj" />
+    <PackageReference Include="jaksg82.Std20.MathExt" Version="0.2.0" />
+    <PackageReference Include="jaksg82.Std20.StringFormat" Version="0.2.1" />
   </ItemGroup>
 
 </Project>
