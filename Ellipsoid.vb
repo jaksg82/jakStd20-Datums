@@ -82,7 +82,22 @@ Public Class Ellipsoid
         iAxis = 6378137
         iInvFlat = 298.2572236
         iSphere = False
-        ToWgs84 = Nothing
+        ToWgs84 = New None
+
+    End Sub
+
+    ''' <summary>
+    ''' Create a default ellipsoid (World Geodetic System 1984 EPSG:7030)
+    ''' </summary>
+    ''' <param name="datum">Datum Transformation Method</param>
+    Public Sub New(datum As Transformations)
+        iEpsg = 7030
+        FullName = "World Geodetic System 1984"
+        ShortName = "WGS_1984"
+        iAxis = 6378137
+        iInvFlat = 298.2572236
+        iSphere = False
+        ToWgs84 = datum
 
     End Sub
 
@@ -125,7 +140,51 @@ Public Class Ellipsoid
             Me.InverseFlattening = inverseFlattening
             IsSphere = True
         End If
-        ToWgs84 = Nothing
+        ToWgs84 = New None
+
+    End Sub
+
+    ''' <summary>
+    ''' Create an ellipsoid from the given paramenters
+    ''' </summary>
+    ''' <param name="id">Epsg Id</param>
+    ''' <param name="fullName">Complete name of the Ellipsoid</param>
+    ''' <param name="ShortName">Short name max 12 characters</param>
+    ''' <param name="SemiMayorAxis">Semi mayor axis</param>
+    ''' <param name="InverseFlattening">Inverse flattening. Input zero or NaN to define a sphere.</param>
+    ''' <param name="datum">Datum Transformation Method</param>
+    Public Sub New(id As Integer, fullName As String, shortName As String, semiMayorAxis As Double, inverseFlattening As Double, datum As Transformations)
+        iEpsg = id
+        Me.FullName = fullName
+        If shortName Is Nothing Then
+            Me.ShortName = "DEFAULT"
+        Else
+            If shortName.Length > 12 Then
+                Me.ShortName = shortName.Substring(0, 12)
+            Else
+                Me.ShortName = shortName
+            End If
+
+        End If
+        If IsFinite(semiMayorAxis) Then
+            iAxis = semiMayorAxis
+        Else
+            iAxis = 6378137
+        End If
+
+        If IsFinite(inverseFlattening) Then
+            If inverseFlattening = 0.0 Then
+                Me.InverseFlattening = inverseFlattening
+                IsSphere = True
+            Else
+                Me.InverseFlattening = inverseFlattening
+                IsSphere = False
+            End If
+        Else
+            Me.InverseFlattening = inverseFlattening
+            IsSphere = True
+        End If
+        ToWgs84 = datum
 
     End Sub
 
@@ -151,7 +210,34 @@ Public Class Ellipsoid
         Else
             IsSphere = True
         End If
-        ToWgs84 = Nothing
+        ToWgs84 = New None
+
+    End Sub
+
+    ''' <summary>
+    ''' Create an ellipsoid from the selected EPSG ellipsoid.
+    ''' </summary>
+    ''' <param name="id">Epsg Id</param>
+    ''' <param name="datum">Datum Transformation Method</param>
+    Public Sub New(id As Integer, datum As Transformations)
+        Dim epsgell As New EpsgEllipsoids
+        Dim tmpell As Ellipsoid = epsgell.GetFromEpsgID(id)
+
+        iEpsg = tmpell.EpsgId
+        Me.FullName = tmpell.FullName
+        Me.ShortName = tmpell.ShortName
+        iAxis = tmpell.SemiMayorAxis
+        iInvFlat = tmpell.InverseFlattening
+        If IsFinite(tmpell.InverseFlattening) Then
+            If tmpell.InverseFlattening = 0.0 Then
+                IsSphere = True
+            Else
+                IsSphere = False
+            End If
+        Else
+            IsSphere = True
+        End If
+        ToWgs84 = datum
 
     End Sub
 

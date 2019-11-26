@@ -1,4 +1,4 @@
-﻿Imports MathExt
+Imports MathExt
 
 Public Class Geocentric3p
     Inherits Transformations
@@ -36,10 +36,14 @@ Public Class Geocentric3p
     Public Sub New(sourceEllipsoid As Ellipsoid, longName As String, compactName As String, deltaX As Double, deltaY As Double, deltaZ As Double)
         FullName = longName
         ShortName = compactName
+
         iSrcEll = sourceEllipsoid
+
         iTgtEll = New Ellipsoid
+
         idx = deltaX
         idy = deltaY
+
         idz = deltaZ
         iRotConv = RotationConventions.PositionVector
     End Sub
@@ -67,6 +71,7 @@ Public Class Geocentric3p
 
             'From LL to XYZ
             Dim V1 As Double
+
             V1 = iSrcEll.GetRadiuosOfCurvatureInThePrimeVertical(point.Y)
             TmpGC1.X = (V1 + point.Z) * Math.Cos(point.Y) * Math.Cos(point.X)
             TmpGC1.Y = (V1 + point.Z) * Math.Cos(point.Y) * Math.Sin(point.X)

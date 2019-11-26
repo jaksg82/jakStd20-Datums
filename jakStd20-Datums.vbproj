@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>Datums</RootNamespace>
@@ -7,7 +7,7 @@
     <Description>Handles the coordinates, datums and conversions</Description>
     <OptionStrict>On</OptionStrict>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <PackageId>jaksg82.Std20.Datums</PackageId>
     <Authors>jaksg82</Authors>
     <Product>Standard2.0 library Datums</Product>
@@ -31,5 +31,4 @@
     <PackageReference Include="jaksg82.Std20.MathExt" Version="0.2.0" />
     <PackageReference Include="jaksg82.Std20.StringFormat" Version="0.2.1" />
   </ItemGroup>
-
 </Project>
